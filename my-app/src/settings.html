@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
+    <link rel = "stylesheet" type="text/css" href="settings.css">
 </head>
+
 <body>
-    <h1>Settings</h1>
-    <p>Display Mode</p>
-    <p>Resolution</p>
-    <p>Sound</p>
+    <h1 class="settingsTitle">Settings</h1>
+    <audio id="menu-sound" loop> <source src="assets/menu-soundtrack.mp3" type="audio/mpeg"></audio>
+
+    <div id = "items-container">
+    <p id = "displaySize">Display Mode</p>
+    <p id = "resolutionSize">Resolution</p>
+    <p id = "soundSlider">Sound</p>
     <button id = "back-button">Back</button>
+    </div>
+
 <script src="renderer.js"></script>
 </body>
 </html>
