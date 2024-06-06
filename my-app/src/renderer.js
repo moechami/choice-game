@@ -3,16 +3,32 @@
 //main menu audio function
 window.onload = function() {
   const audio = document.getElementById('menu-sound');
-  audio.play();
+  if (audio) {
+    audio.play();
+  }
 };
 
-// Main menu button functions
-const loadGameButton = document.getElementById("load-game-button")
-const newGameButton = document.getElementById("new-game-button")
-const settingsButton = document.getElementById("settings-button")
-const exitButton = document.getElementById("exit-game-button")
+//Main menu button functions
+document.addEventListener("DOMContentLoaded", () => {
+  const settingsButton = document.getElementById("settings-button");
+  if (settingsButton) {
+    settingsButton.addEventListener("click", () => {
+      window.location.href = "settings.html";
+    });
+  }
 
-loadGameButton.addEventListener("click", loadGame);
-newGameButton.addEventListener("click", newGame);
-settingsButton.addEventListener("click", openSettings);
-exitButton.addEventListener("click", quitApp);
+  const backButton = document.getElementById("back-button");
+  if (backButton) {
+    backButton.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  }
+
+  const exitButton = document.getElementById("exit-button");
+  if (exitButton) {
+    exitButton.addEventListener("click", () => {
+      window.electron.exitApp();
+    });
+  }
+
+});

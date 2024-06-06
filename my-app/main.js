@@ -44,3 +44,8 @@ ipcMain.on('openSettings', (event) => {
   settingsWindow.loadFile(path.join(__dirname, 'src', 'settings.html'));
 
 });
+
+//ipc communicator to close program/exit button
+ipcMain.on('exit-app', () => {
+  app.quit();
+});
