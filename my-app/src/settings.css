@@ -1,11 +1,11 @@
-/* styles.css file */
+/* settings.css file */
 
 @font-face {
     font-family: 'MenuTitle';
     src: url(fonts/Gameplay.ttf);
 }
 
-.mainMenuTitle {
+.settingsTitle {
     text-align: center;
     font-family: MenuTitle;
     font-size: 5vw;
@@ -16,13 +16,13 @@
 
 body {
     background-color: darkgray;
-   /* background-image: url('imgs/startMenuImg.webp');
+    /*background-image: url();
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed; */
 }
 
-#buttons-container {
+#items-container {
     position: fixed;
     bottom: 100px;
     left: 50%;
@@ -31,7 +31,7 @@ body {
     width: 80%;
 }
 
-#buttons-container::before {
+#items-container::before {
     content: '';
     display: block;
     width: 25%; /* Adjust width as needed */
@@ -42,7 +42,7 @@ body {
 
 }
 
-#buttons-container::after {
+#items-container::after {
     content: '';
     display: block;
     width: 10%; /* Adjust width as needed */
@@ -51,30 +51,4 @@ body {
     margin: 0 auto 20px auto; /* Adjust spacing as needed */
     margin-top: 20px; /* Space below the last button */
 
-}
-
-#buttons-container button {
-    display: block;
-    width: 250px;
-    margin: 20px auto;
-    padding: 10px;
-    font-family: 'Courier New', Courier, monospace; /* Similar to the pixelated font in the image */
-    font-size: 20px; /* Adjust font size as needed */
-    color: white;
-    background-color: transparent;
-    border: none;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#buttons-container button:hover {
-    color: red;
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-#buttons-container button:focus {
-    outline: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
 }
