@@ -1,6 +1,22 @@
 const { ipcRenderer, remote } = require('electron');
 
-// The renderer.js file is a js file that you can include in your HTML.
+// Function to load saved settings from localStorage
+function loadSettings() {
+  const savedVolume = localStorage.getItem('volume');
+  if (savedVolume !== null) {
+    const audio = document.getElementById('menu-sound');
+    const soundSlider = document.getElementById('sound-slider');
+    audio.volume = savedVolume / 100;
+    soundSlider.value = savedVolume;
+  }
+}
+
+// Function to save settings to localStorage
+function saveSettings() {
+  const soundSlider = document.getElementById('sound-slider');
+  localStorage.setItem('volume', soundSlider.value);
+  alert('Settings saved!');
+}
 
 // Main menu audio function
 window.onload = function() {
@@ -9,15 +25,16 @@ window.onload = function() {
     audio.play();
   }
 
-  // Set initial volume based on the slider value
+  // Set initial volume based on slider value
   const soundSlider = document.getElementById('sound-slider');
   if (soundSlider) {
-    audio.volume = soundSlider.value / 100; // Volume range is 0.0 to 1.0
-
     soundSlider.addEventListener('input', () => {
       audio.volume = soundSlider.value / 100;
     });
   }
+
+  // Load saved settings
+  loadSettings();
 };
 
 // Main menu button functions
@@ -50,6 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
       ipcRenderer.send('change-display-mode', mode);
     });
   }
+
+  const saveButton = document.getElementById("save-button");
+  if (saveButton) {
+    saveButton.addEventListener("click", saveSettings);
+  }
 });
 
 // Function for changing the display modes in the settings page
@@ -64,6 +86,12 @@ function changeDisplayMode(mode) {
       currentWindow.setFullScreen(false);
       currentWindow.setResizable(true);
       currentWindow.setSize(800, 600); // Set to desired windowed size
+      break;
+    case 'borderless':
+      currentWindow.setFullScreen(false);
+      currentWindow.setResizable(false);
+      currentWindow.setSize(1920, 1080); // Set to desired borderless size
+      currentWindow.setSimpleFullScreen(true);
       break;
   }
 }
