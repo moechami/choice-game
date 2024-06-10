@@ -1,54 +1,80 @@
-/* settings.css file */
-
 @font-face {
     font-family: 'MenuTitle';
     src: url(fonts/Gameplay.ttf);
 }
 
+/* General body styling */
+body {
+    background-image: url('assets/settingsImg.png');
+    color: #ffffff; /* White text for better readability */
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Title styling */
 .settingsTitle {
-    text-align: center;
-    font-family: MenuTitle;
+    font-family: 'MenuTitle';
     font-size: 5vw;
     letter-spacing: 10px;
     line-height: 1.5;
     color: whitesmoke;
+    margin-top: 20px;
 }
 
-body {
-    background-color: darkgray;
-    /*background-image: url();
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed; */
-}
-
+/* Container styling */
 #items-container {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
     text-align: center;
     width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 280px;
 }
 
-#items-container::before {
-    content: '';
-    display: block;
-    width: 25%; /* Adjust width as needed */
-    height: 2px;
-    background-color: red; /* Adjust color as needed */
-    margin: 0 auto 20px auto; /* Adjust spacing as needed */
-    margin-bottom: 20px; /* Space above the first button */
-
+/* Settings item styling */
+.settings-item {
+    margin-bottom: 20px; /* Space between items */
 }
 
-#items-container::after {
-    content: '';
+.settings-label {
     display: block;
-    width: 10%; /* Adjust width as needed */
-    height: 2px;
-    background-color: red; /* Adjust color as needed */
-    margin: 0 auto 20px auto; /* Adjust spacing as needed */
-    margin-top: 20px; /* Space below the last button */
+    font-size: 1.2em;
+    margin-bottom: 10px; /* Space between label and control */
+}
 
+/* Dropdown styling */
+.settings-select {
+    width: 75%;
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #444444;
+    color: #ffffff;
+}
+
+/* Slider styling */
+.settings-slider {
+    width: 75%;
+    padding: 10px 0;
+}
+
+/* Button styling */
+.settings-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #444444;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.settings-button:hover {
+    background-color: #555555;
 }
