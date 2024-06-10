@@ -15,7 +15,7 @@
 }
 
 body {
-    background-color: darkgray;
+    background-image: url('assets/startMenu.gif');
    /* background-image: url('imgs/startMenuImg.webp');
     background-size: cover;
     background-repeat: no-repeat;
@@ -24,7 +24,7 @@ body {
 
 #buttons-container {
     position: fixed;
-    bottom: 100px;
+    bottom: 150px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
