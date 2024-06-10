@@ -1,34 +1,41 @@
+// Import the necessary Electron modules
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const url = require('url');
 
-function createWindow() {  // function that creates a new browser window as well as loads its according html file
+// Function to create the main application window
+function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: false, //borderless window
-    fullscreen: true, //fullscreen mode
+    frame: false,
+    fullscreen: true,
     webPreferences: {
-      preload: path.join(__dirname, 'src', 'preload.js')
+      preload: path.join(__dirname, 'src', 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 
   win.loadFile(path.join(__dirname, 'src', 'index.html'));
 }
 
-app.whenReady().then(() => {  // executes when electron is done initializing/loading
+// Event: Called when Electron has finished initialization
+app.whenReady().then(() => {
   createWindow();
 
-  app.on('activate', () => { // for macOS || Used to recreate a window when the dock icon is clicked and there arent any other windows open
+  // Event: Recreate a window when the app is activated (macOS)
+  app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
-app.on('window-all-closed', () => { // quits the application when all windows are closed, except on macOS (refer to the app.on('activate') function for fix)
+// Event: Quit the app when all windows are closed (except on macOS)
+app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
-ipcMain.on('openSettings', (event) => {
+// IPC handler: Open the settings window
+ipcMain.on('openSettings', () => {
   const settingsWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -42,10 +49,32 @@ ipcMain.on('openSettings', (event) => {
   });
 
   settingsWindow.loadFile(path.join(__dirname, 'src', 'settings.html'));
-
 });
 
-//ipc communicator to close program/exit button
+// IPC handler: Quit the app
 ipcMain.on('exit-app', () => {
   app.quit();
+});
+
+// IPC handler: Change the display mode of the currently focused window
+ipcMain.on('change-display-mode', (event, mode) => {
+  const win = BrowserWindow.getFocusedWindow();
+  if (win) {
+    switch (mode) {
+      case 'fullscreen':
+        win.setFullScreen(true);
+        break;
+      case 'windowed':
+        win.setFullScreen(false);
+        win.setResizable(true);
+        win.setSize(800, 600);
+        break;
+      case 'borderless':
+        win.setFullScreen(false);
+        win.setResizable(false);
+        win.setSize(1920, 1080);
+        win.setSimpleFullScreen(true);
+        break;
+    }
+  }
 });
