@@ -5,7 +5,8 @@
 
 /* General body styling */
 body {
-    background-image: url('assets/settingsImg.png');
+    /* background-image: url('assets/settingsImg.png'); */
+    background-image: url('assets/settings5.gif');
     background-size: cover;
     background-position: center;
     color: #ffffff;
