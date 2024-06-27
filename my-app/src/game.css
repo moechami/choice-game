@@ -1,0 +1,13 @@
+/* styles.css */
+body {
+    background-color: #161616;
+    color: #d3d3d3;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
