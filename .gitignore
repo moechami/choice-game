@@ -46,6 +46,7 @@ coverage/
 
 # Virtual environments
 venv/
+venv
 
 # Mac system files
 .DS_Store

@@ -1,19 +1,20 @@
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 from langchain_community.chat_message_histories import CassandraChatMessageHistory
-from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_openai import OpenAI
 from langchain.memory import ConversationBufferMemory
+from langchain_core.output_parsers import StrOutputParser
 import json
 
-cloud_config = {
-    'secure_connect_bundle': 'secure-connect-choice-game.zip'
-}
-
+# Load secrets
 with open("choice-game-token.json") as f:
     secrets = json.load(f)
 
+# Cassandra and OpenAI configuration
+cloud_config = {
+    'secure_connect_bundle': 'secure-connect-choice-game.zip'
+}
 CLIENT_ID = secrets["clientId"]
 CLIENT_SECRET = secrets["secret"]
 ASTRA_DB_KEYSPACE = "choice"
@@ -23,48 +24,56 @@ auth_provider = PlainTextAuthProvider(CLIENT_ID, CLIENT_SECRET)
 cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
 session = cluster.connect()
 
+# Initialize message history
 message_history = CassandraChatMessageHistory(
-    session_id="choice session",
+    session_id="choice_session",
     session=session,
     keyspace=ASTRA_DB_KEYSPACE,
     ttl_seconds=3600
 )
 
+# Clear any previous chat history
 message_history.clear()
 
+# Set up memory with the cleared message history
 cass_buff_memory = ConversationBufferMemory(
     memory_key="chat_history",
     chat_memory=message_history
 )
 
+# Define the prompt template
 template = """
 You are now a model that takes in a user's unique input describing actions or decisions within a 2D text-based game, and responds with a compelling, contextually coherent narrative that advances the story. The narrative should include rich descriptions of the environment, characters, and events that occur as a result of the user's input. Here is a general story prompt you can follow: The protagonist is an eight-year-old boy who, upon waking one night, realizes he's completely alone at home. He decides to uncover what happened to his family, but in the darkness, everything looks different…
 
 Here are some rules to follow:
-1. Start by asking the player to choose some kind of weapons that will be used later in the game. Then wait for the users input to move forward
-2. Have a few paths that lead to success
-3. Have some paths that lead to death. If the user dies generate a response that explains the death and ends in the text: "The End.", I will search for this text to end the game
+1. Start by asking the player to choose some kind of weapons that will be used later in the game. Then wait for the user's input to move forward.
+2. Have a few paths that lead to success.
+3. Have some paths that lead to death. If the user dies generate a response that explains the death and ends in the text: "The End.", I will search for this text to end the game.
 
 Here is the chat history, use this to understand what to say next: {chat_history}
 User: {user_input}
-AI:"""
+"""
 
+# Create the prompt
 prompt = PromptTemplate(
     input_variables=["chat_history", "user_input"],
     template=template
 )
 
+# Initialize the LLM with the API key
 llm = OpenAI(openai_api_key=OPENAI_API_KEY)
-llm_chain = LLMChain(
-    llm=llm,
-    prompt=prompt,
-    memory=cass_buff_memory
-)
 
-choice = "start"
+# Define the chain
+chain = prompt | llm | StrOutputParser()
+
+# Start the game with user's input
+print("The game starts here. You can enter your choices as the story progresses.")
+choice = input("Your reply: ")
 
 while True:
-    response = llm_chain.predict(user_input=choice)
+    # Load memory variables properly
+    memory_variables = cass_buff_memory.load_memory_variables({"chat_history": ""})
+    response = chain.invoke({"chat_history": memory_variables["chat_history"], "user_input": choice})
     print(response.strip())
 
     if "The End." in response:
