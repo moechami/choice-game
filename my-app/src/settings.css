@@ -1,0 +1,127 @@
+@font-face {
+    font-family: 'MenuTitle';
+    src: url(fonts/Gameplay.ttf);
+}
+
+/* General body styling */
+body {
+    /* background-image: url('assets/settingsImg.png'); */
+    background-image: url('assets/settings5.gif');
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Title styling */
+.settingsTitle {
+    font-family: 'MenuTitle';
+    font-size: 5vw;
+    letter-spacing: 10px;
+    line-height: 1.5;
+    color: whitesmoke;
+    margin-top: 20px;
+}
+
+/* Container styling */
+#items-container {
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 150px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+/* Settings item styling */
+.settings-item {
+    margin-bottom: 20px;
+}
+
+.settings-label {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Dropdown styling */
+.settings-select {
+    width: 75%;
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #444444;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    outline: none;
+}
+
+.settings-select:hover {
+    background-color: #555555; /* Change color on hover */
+}
+
+/* Slider styling */
+.settings-slider {
+    width: 75%;
+    padding: 10px 0;
+    -webkit-appearance: none; /* Remove default slider styling */
+    appearance: none; /* Remove default slider styling */
+    background: #444444;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    border-radius: 5px; /* Rounded tracker */
+}
+
+.settings-slider:hover {
+    opacity: 1;
+}
+
+.settings-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default thumb styling */
+    appearance: none; /* Remove default thumb styling */
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
+}
+
+.settings-slider::-moz-range-thumb {
+    width: 20px; /* Thumb size */
+    height: 20px; /* Thumb size */
+    background: #ffffff; /* Thumb color */
+    cursor: pointer;
+    border-radius: 50%; /* Round thumb */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
+}
+
+/* Button styling */
+.settings-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #444444;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
+}
+
+.settings-button:hover {
+    background-color: #555555;
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}

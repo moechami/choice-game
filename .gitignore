@@ -44,6 +44,10 @@ coverage/
 # dotenv environment variables file
 .env
 
+# Virtual environments
+venv/
+venv
+
 # Mac system files
 .DS_Store
 

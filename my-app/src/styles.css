@@ -1,0 +1,81 @@
+/* styles.css file */
+
+@font-face {
+    font-family: 'MenuTitle';
+    src: url(fonts/Gameplay.ttf);
+}
+
+.mainMenuTitle {
+    text-align: center;
+    font-family: MenuTitle;
+    font-size: 5vw;
+    letter-spacing: 10px;
+    line-height: 1.5;
+    color: whitesmoke;
+}
+
+body {
+    /* background-image: url('assets/startMenu.gif'); */
+    background-image: url('assets/ChoiceBackground2.gif');
+   /* background-image: url('imgs/startMenuImg.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; */
+}
+
+#buttons-container {
+    position: fixed;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 80%;
+}
+
+#buttons-container::before {
+    content: '';
+    display: block;
+    width: 25%; /* Adjust width as needed */
+    height: 2px;
+    background-color: red; /* Adjust color as needed */
+    margin: 0 auto 20px auto; /* Adjust spacing as needed */
+    margin-bottom: 20px; /* Space above the first button */
+
+}
+
+#buttons-container::after {
+    content: '';
+    display: block;
+    width: 10%; /* Adjust width as needed */
+    height: 2px;
+    background-color: red; /* Adjust color as needed */
+    margin: 0 auto 20px auto; /* Adjust spacing as needed */
+    margin-top: 20px; /* Space below the last button */
+
+}
+
+#buttons-container button {
+    display: block;
+    width: 250px;
+    margin: 20px auto;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace; /* Similar to the pixelated font in the image */
+    font-size: 20px; /* Adjust font size as needed */
+    color: white;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#buttons-container button:hover {
+    color: red;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#buttons-container button:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
