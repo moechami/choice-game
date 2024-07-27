@@ -1,6 +1,9 @@
 // Import the necessary Electron modules
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const axios = require('axios');
+
+const FLASK_SERVER_URL = 'http://localhost:5000';
 
 // Function to create the main application window
 function createWindow() {
@@ -32,6 +35,32 @@ app.whenReady().then(() => {
 // Event: Quit the app when all windows are closed (except on macOS)
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
+});
+
+ipcMain.on('start-game', async (event) => {
+  try {
+      const response = await axios.get(`${FLASK_SERVER_URL}/start_game`);
+      event.reply('game-response', response.data);
+  } catch (error) {
+      console.error('Error starting game:', error);
+      event.reply('game-response', {
+          story: 'Error starting the game. Please try again.',
+          options: ''
+      });
+  }
+});
+
+ipcMain.on('send-message', async (event, message) => {
+  try {
+      const response = await axios.post(`${FLASK_SERVER_URL}/send_message`, { message });
+      event.reply('game-response', response.data);
+  } catch (error) {
+      console.error('Error sending message:', error);
+      event.reply('game-response', {
+          story: 'Error processing your message. Please try again.',
+          options: ''
+      });
+  }
 });
 
 // IPC handler: Open the settings window

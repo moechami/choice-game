@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Game</title>
-  <link rel="stylesheet" type="text/css" href="game.css">
+    <title>Game</title>
+    <link rel="stylesheet" type="text/css" href="game.css">
 </head>
 <body>
-  <h1>Temp title</h1>
-  <button id="back-button">temp button</button>
-
-  <div class="chat-container" id="chat-container">
-    <div class="chat-box" id="chat-box">
-      <!-- Chat messages will appear here -->
+    <h1>Temp title</h1>
+    <button id="back-button">temp button</button>
+    <div class="chat-container" id="chat-container">
+        <div class="chat-box" id="chat-box">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type your message here..." />
+            <button onclick="sendMessage()">Enter</button>
+        </div>
     </div>
-    <div class="input-container">
-      <input type="text" id="user-input" placeholder="Type your message here..." />
-      <button onclick="sendMessage()">Enter</button>
-    </div>
-  </div>
-
-  <script src="renderer.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>

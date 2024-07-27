@@ -22,7 +22,7 @@ h1 {
 .chat-container {
   width: 88%;
   max-width: 3000px;
-  height: 35%;
+  height: 70%; /* Increased height to accommodate chat box and input */
   background-color: black;
   border-radius: 8px;
   display: flex;
@@ -30,7 +30,7 @@ h1 {
   justify-content: flex-start;
   overflow: hidden;
   position: relative;
-  top: 540px; /* Adjust this value as necessary to position the chat box properly */
+  top: 50px; /* Adjust this value as necessary to position the chat box properly */
   left: 10px;
 }
 
@@ -43,10 +43,7 @@ h1 {
 .input-container {
   display: flex;
   border-top: 1px solid green;
-  position: absolute;
-  bottom: 10px; /* Adjust this value to align with the semicolon */
-  left: 20px; /* Adjust this value to align with the semicolon */
-  width: calc(100% - 40px); /* Adjust to fit within the chat container */
+  padding: 10px; /* Add padding to avoid overlap */
 }
 
 #user-input {
