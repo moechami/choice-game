@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: 'MenuTitle';
-    src: url(fonts/Gameplay.ttf);
+    src: url(fonts/menufont.ttf);
 }
 
 .mainMenuTitle {
@@ -15,12 +15,7 @@
 }
 
 body {
-    /* background-image: url('assets/startMenu.gif'); */
     background-image: url('assets/ChoiceBackground2.gif');
-   /* background-image: url('imgs/startMenuImg.webp');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed; */
 }
 
 #buttons-container {
