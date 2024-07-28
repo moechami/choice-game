@@ -51,7 +51,6 @@ h1 {
 .input-container {
   font-family: GameplayFont;
   display: flex;
-  border-top: 1px solid green;
   padding: 10px; /* Add padding to avoid overlap */
 }
 

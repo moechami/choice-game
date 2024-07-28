@@ -49,7 +49,6 @@ game_state = GameState()
 
 def update_game_state(choice):
     # Simple logic to update game state based on player's choice
-    # This is a basic implementation and should be expanded based on your game's needs
     lower_choice = choice.lower()
     if "fight" in lower_choice or "attack" in lower_choice:
         game_state.health -= 10  # Fighting reduces health
@@ -71,7 +70,6 @@ def update_game_state(choice):
 
 def extract_state_changes(story):
     # Extract state changes from the AI's response
-    # This is a simple implementation and should be adjusted based on your AI's output format
     changes = []
 
     # Check for health changes
@@ -126,7 +124,7 @@ def check_game_over():
     return False, ""
 
 template = """
-You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows a man who wakes up to find himself alone at home and decides to uncover what happened to his family.
+You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows as is: In a war-torn land, a healer uses shadows to mend wounds and cure illnesses. When a skeptical soldier encounters the healer, they embark on a journey to understand the true nature of their powers and the cost that comes with them.
 
 Current game state:
 Health: {health}
@@ -139,7 +137,7 @@ Rules and guidelines:
 2. Introduce complex moral choices and dilemmas.
 3. Implement a system of cause and effect based on the game state.
 4. Include various paths to success, but make them challenging and dependent on previous choices.
-5. Allow for failure and game-over scenarios when appropriate.
+5. If the player makes reckless decisions, allow for negative outcomes including injury or game over scenarios.
 6. Introduce elements of mystery, suspense, and occasional age-appropriate horror.
 7. Be consistent with the game state and respect previous decisions.
 8. Present the story and options in the following format:
@@ -153,7 +151,7 @@ C: [Specific choice]
 D: Your choice (specify your action)
 
 Important:
-- Player actions should have significant consequences.
+- Certain player actions should have significant consequences.
 - If the player makes reckless decisions, allow for negative outcomes including injury or game over scenarios.
 - Maintain internal consistency with the game state and previous decisions.
 - Create branching narratives based on key decisions.
