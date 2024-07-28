@@ -1,6 +1,38 @@
 const { ipcRenderer } = require('electron');
 let isFirstMessage = true;
 
+// Load the typing sound
+const typingSound = new Audio('assets/typing.mp3');
+const audioClips = [
+    'assets/audio1.mp3',
+    'assets/audio2.mp3',
+    'assets/audio3.mp3'
+];
+
+function createAudioElement(src) {
+    const audio = new Audio(src);
+    audio.volume =  0.1;
+    return audio;
+}
+
+const audioElements = audioClips.map(createAudioElement);
+
+// Function to play audio in sequence
+function playAudioSequence(index = 0) {
+    if (index >= audioElements.length) {
+        index = 0; // Reset to the first audio element after the last one
+    }
+    const currentAudio = audioElements[index];
+    currentAudio.play();
+    currentAudio.onended = () => {
+        playAudioSequence(index + 1); // Play the next audio in sequence when the current one ends
+    };
+}
+
+window.addEventListener('load', () => {
+    playAudioSequence(); // Start the audio sequence
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const chatBox = document.getElementById('chat-box');
     const userInput = document.getElementById('user-input');
@@ -26,6 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sendButton.addEventListener('click', sendMessage);
     userInput.addEventListener('keypress', (event) => {
+        // Play the typing sound
+        typingSound.currentTime = 0; // Reset the sound to the beginning
+        typingSound.play();
+
         if (event.key === 'Enter') {
             sendMessage();
         }
