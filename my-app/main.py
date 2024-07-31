@@ -7,6 +7,10 @@ from langchain.prompts import PromptTemplate
 from langchain_openai import OpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain_core.output_parsers import StrOutputParser
+from io import BytesIO
+import openai
+import base64
+import requests
 import json
 import re
 
@@ -123,6 +127,47 @@ def check_game_over():
         return True, "Your health has dropped to zero. Game Over."
     return False, ""
 
+# Instantiate the OpenAI client
+openai_client = openai.OpenAI(api_key=OPENAI_API_KEY)
+
+def generate_image_dalle(prompt):
+    try:
+        response = openai_client.images.generate(
+            prompt=prompt,
+            n=1,
+            size="1024x1024"
+        )
+        image_url = response.data[0].url
+
+        # Download the image
+        image_response = requests.get(image_url)
+        if image_response.status_code == 200:
+            # Convert the image to base64
+            image_data = BytesIO(image_response.content)
+            base64_image = base64.b64encode(image_data.getvalue()).decode('utf-8')
+            return base64_image
+        else:
+            print(f"Failed to download image: {image_response.status_code}")
+            return None
+    except Exception as e:
+        print(f"Error generating image: {str(e)}")
+        return None
+
+def generate_image_prompt(story):
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are an AI assistant that creates concise, vivid image prompts based on story descriptions."},
+                {"role": "user", "content": f"Create a brief, vivid image prompt based on this story segment: {story}"}
+            ],
+            max_tokens=50
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"Error generating image prompt: {str(e)}")
+        return None
+
 template = """
 You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows as is: In a war-torn land, a healer uses shadows to mend wounds and cure illnesses. When a skeptical soldier encounters the healer, they embark on a journey to understand the true nature of their powers and the cost that comes with them.
 
@@ -197,7 +242,15 @@ def start_game():
         "key_decisions": game_state.key_decisions
     })
     story = response.strip()
-    return jsonify({"story": story, "options": "What would you like to do? (Type your action or choice)"})
+
+    image_prompt = generate_image_prompt(story)
+    image = generate_image_dalle(image_prompt) if image_prompt else None
+
+    return jsonify({
+        "story": story,
+        "options": "What would you like to do? (Type your action or choice)",
+        "image": image
+    })
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -225,9 +278,13 @@ def send_message():
 
     cass_buff_memory.save_context({"input": choice}, {"output": story})
 
+    image_prompt = generate_image_prompt(story)
+    image = generate_image_dalle(image_prompt) if image_prompt else None
+
     return jsonify({
         "story": story,
         "options": options,
+        "image": image,
         "game_state": {
             "health": game_state.health,
             "inventory": game_state.inventory,
