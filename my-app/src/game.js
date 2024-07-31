@@ -11,7 +11,7 @@ const audioClips = [
 
 function createAudioElement(src) {
     const audio = new Audio(src);
-    audio.volume =  0.1;
+    audio.volume = 0.1;
     return audio;
 }
 
@@ -35,6 +35,7 @@ window.addEventListener('load', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const chatBox = document.getElementById('chat-box');
+    const imageContainer = document.getElementById('image-container');
     const userInput = document.getElementById('user-input');
     const sendButton = document.querySelector('button[onclick="sendMessage()"]');
     let isFirstMessage = true;  // Declare the isFirstMessage variable
@@ -45,6 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
         messageElement.className = isUser ? 'user-message' : 'ai-message';
         chatBox.appendChild(messageElement);
         chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function appendImage(base64Image) {
+        imageContainer.style.backgroundImage = `url(data:image/png;base64,${base64Image})`;
+        imageContainer.style.backgroundSize = 'cover';
+        imageContainer.style.backgroundPosition = 'center';
+        imageContainer.style.backgroundRepeat = 'no-repeat';
     }
 
     function sendMessage() {
@@ -70,6 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.on('game-response', (event, response) => {
         appendMessage(response.story);
         appendMessage(response.options);
+        if (response.image) {
+            appendImage(response.image);
+        }
         if (isFirstMessage) {
             isFirstMessage = false;
             userInput.disabled = false;
