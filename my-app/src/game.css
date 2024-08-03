@@ -1,7 +1,12 @@
+@font-face {
+  font-family: 'GameplayFont';
+  src: url(fonts/gamefont.ttf);
+}
+
 body {
   background-image: url('assets/gamebg.png');
   color: #d3d3d3;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: GameplayFont;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -15,41 +20,59 @@ h1 {
   margin-bottom: 20px;
 }
 
-#back-button {
-  margin-bottom: 20px;
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  height: 420px;
+  width: 38%;
+  background-color: transparent;
+  position: absolute;
+  top: 53px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid green;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .chat-container {
   width: 88%;
+  font-family: GameplayFont;
   max-width: 3000px;
-  height: 35%;
+  height: 50%;
   background-color: black;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   overflow: hidden;
-  position: relative;
-  top: 540px; /* Adjust this value as necessary to position the chat box properly */
-  left: 10px;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .chat-box {
+  font-family: GameplayFont;
   flex-grow: 1;
   overflow-y: auto;
   padding: 10px;
 }
 
 .input-container {
+  font-family: GameplayFont;
   display: flex;
-  border-top: 1px solid green;
-  position: absolute;
-  bottom: 10px; /* Adjust this value to align with the semicolon */
-  left: 20px; /* Adjust this value to align with the semicolon */
-  width: calc(100% - 40px); /* Adjust to fit within the chat container */
+  padding: 10px;
 }
 
 #user-input {
+  font-family: GameplayFont;
   flex-grow: 1;
   padding: 10px;
   border: none;
@@ -59,6 +82,7 @@ h1 {
 }
 
 button {
+  font-family: GameplayFont;
   padding: 10px;
   border: none;
   background-color: green;
