@@ -132,16 +132,19 @@ openai_client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
 def generate_image_dalle(prompt):
     try:
+        # Append the required terms to the prompt
+        enhanced_prompt = f"{prompt}, pixel art, retro, pixel, pixelart-hard"
         response = openai_client.images.generate(
-            prompt=prompt,
+            model="dall-e-3",
+            prompt=enhanced_prompt,
             n=1,
-            size="1024x1024"
+            size="1792x1024"
         )
         image_url = response.data[0].url
 
         # Download the image
         image_response = requests.get(image_url)
-        if image_response.status_code == 200:
+        if (image_response.status_code == 200):
             # Convert the image to base64
             image_data = BytesIO(image_response.content)
             base64_image = base64.b64encode(image_data.getvalue()).decode('utf-8')
@@ -156,20 +159,25 @@ def generate_image_dalle(prompt):
 def generate_image_prompt(story):
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are an AI assistant that creates concise, vivid image prompts based on story descriptions."},
                 {"role": "user", "content": f"Create a brief, vivid image prompt based on this story segment: {story}"}
             ],
             max_tokens=50
         )
-        return response.choices[0].message.content.strip()
+        # Append the required terms to the prompt
+        image_prompt = f"{response.choices[0].message.content.strip()}, pixel art, retro, pixel, pixelart-hard"
+        return image_prompt
     except Exception as e:
         print(f"Error generating image prompt: {str(e)}")
         return None
 
+
 template = """
-You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows as is: In a war-torn land, a healer uses shadows to mend wounds and cure illnesses. When a skeptical soldier encounters the healer, they embark on a journey to understand the true nature of their powers and the cost that comes with them.
+You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows as is: Inspired by "The Road" by Cormac McCarthy:
+
+    Prompt: In a bleak, post-apocalyptic world, a parent (the player) and child traverse a desolate landscape in search of safety. Their bond is tested by the harsh environment and encounters with other survivors. They must rely on their wits and each other to find hope and a place to call home.
 
 Current game state:
 Health: {health}
@@ -180,7 +188,7 @@ Key Decisions: {key_decisions}
 Rules and guidelines:
 1. Create a rich, atmospheric narrative with detailed descriptions.
 2. Introduce complex moral choices and dilemmas.
-3. Implement a system of cause and effect based on the game state.
+3. Implement a system of cause and effect based on the current game state.
 4. Include various paths to success, but make them challenging and dependent on previous choices.
 5. If the player makes reckless decisions, allow for negative outcomes including injury or game over scenarios.
 6. Introduce elements of mystery, suspense, and occasional age-appropriate horror.
@@ -207,7 +215,7 @@ Important:
 Chat history: {chat_history}
 User's latest input: {user_input}
 
-AI: Based on the user's latest input, the current game state, and the story so far, provide a unique and immersive continuation of the story, followed by four options in the format specified above. Ensure that the story and options are consistent with the game state and previous decisions.
+AI: Based on the the rules and guidlines specified above, the user's latest input, the current game state, and the story so far, provide a unique and immersive continuation of the story, followed by four options in the format specified above. Ensure that the story and options are consistent with the game state and previous decisions.
 """
 
 # Create the prompt

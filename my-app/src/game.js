@@ -11,7 +11,7 @@ const audioClips = [
 
 function createAudioElement(src) {
     const audio = new Audio(src);
-    audio.volume = 0.1;
+    audio.volume = 0.05;
     return audio;
 }
 
@@ -49,10 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function appendImage(base64Image) {
-        imageContainer.style.backgroundImage = `url(data:image/png;base64,${base64Image})`;
-        imageContainer.style.backgroundSize = 'cover';
-        imageContainer.style.backgroundPosition = 'center';
-        imageContainer.style.backgroundRepeat = 'no-repeat';
+        imageContainer.innerHTML = ''; // Clear any existing content
+        const img = document.createElement('img');
+        img.src = `data:image/png;base64,${base64Image}`;
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '100%';
+        img.style.objectFit = 'contain';
+        imageContainer.appendChild(img);
     }
 
     function sendMessage() {
