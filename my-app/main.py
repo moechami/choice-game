@@ -132,16 +132,19 @@ openai_client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
 def generate_image_dalle(prompt):
     try:
+        # Append the required terms to the prompt
+        enhanced_prompt = f"{prompt}, pixel art, retro, pixel, pixelart-hard"
         response = openai_client.images.generate(
-            prompt=prompt,
+            model="dall-e-3",
+            prompt=enhanced_prompt,
             n=1,
-            size="1024x1024"
+            size="1792x1024"
         )
         image_url = response.data[0].url
 
         # Download the image
         image_response = requests.get(image_url)
-        if image_response.status_code == 200:
+        if (image_response.status_code == 200):
             # Convert the image to base64
             image_data = BytesIO(image_response.content)
             base64_image = base64.b64encode(image_data.getvalue()).decode('utf-8')
@@ -156,20 +159,23 @@ def generate_image_dalle(prompt):
 def generate_image_prompt(story):
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are an AI assistant that creates concise, vivid image prompts based on story descriptions."},
                 {"role": "user", "content": f"Create a brief, vivid image prompt based on this story segment: {story}"}
             ],
             max_tokens=50
         )
-        return response.choices[0].message.content.strip()
+        # Append the required terms to the prompt
+        image_prompt = f"{response.choices[0].message.content.strip()}, pixel art, retro, pixel, pixelart-hard"
+        return image_prompt
     except Exception as e:
         print(f"Error generating image prompt: {str(e)}")
         return None
 
+
 template = """
-You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows as is: In a war-torn land, a healer uses shadows to mend wounds and cure illnesses. When a skeptical soldier encounters the healer, they embark on a journey to understand the true nature of their powers and the cost that comes with them.
+You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows as is: In a post-apocalyptic world where cities are buried under desert sands and technology is a forgotten relic, a lone scavenger named Ethan discovers an ancient bunker with a working AI. The AI reveals that it holds the key to restoring the planet’s ecosystems, but it requires Ethan to embark on a perilous journey across the wastelands to gather rare, surviving pieces of technology. As Ethan navigates through treacherous territories controlled by ruthless warlords and mutated creatures, he must decide if he can trust the AI and whether humanity deserves a second chance at rebuilding the world.
 
 Current game state:
 Health: {health}

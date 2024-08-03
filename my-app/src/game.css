@@ -20,17 +20,13 @@ h1 {
   margin-bottom: 20px;
 }
 
-#back-button {
-  margin-bottom: 20px;
-}
-
 .image-container {
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  height: 450px; /* Adjust this value based on the size of your rectangle box */
-  width: 91%; /* Ensure the image container takes the full width of the page */
+  height: 420px;
+  width: 38%;
   background-color: transparent;
   position: absolute;
   top: 53px;
@@ -40,8 +36,8 @@ h1 {
 }
 
 .image-container img {
-  max-height: 20%;
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -49,7 +45,7 @@ h1 {
   width: 88%;
   font-family: GameplayFont;
   max-width: 3000px;
-  height: 46%;
+  height: 50%;
   background-color: black;
   border-radius: 8px;
   display: flex;
