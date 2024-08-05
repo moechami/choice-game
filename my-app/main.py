@@ -215,7 +215,7 @@ Important:
 Chat history: {chat_history}
 User's latest input: {user_input}
 
-AI: Based on the the rules and guidlines specified above, the user's latest input, the current game state, and the story so far, provide a unique and immersive continuation of the story, followed by four options in the format specified above. Ensure that the story and options are consistent with the game state and previous decisions. Also be sure that if the player makes reckless decisions, you allow for negative outcomes including injury or game over scenarios.
+AI: Based on the, the current game state, and the story so far, provide a unique and immersive continuation of the story, followed by four options in the format specified above. Ensure that the story and options are consistent with the game state and previous decisions. Also be sure that if the player makes reckless decisions, you allow for negative outcomes including injury or game over scenarios.
 """
 
 # Create the prompt
