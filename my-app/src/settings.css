@@ -21,7 +21,7 @@ body {
 
 /* Title styling */
 .settingsTitle {
-    font-family: 'MenuTitle';
+    font-family: MenuTitle;
     font-size: 5vw;
     letter-spacing: 10px;
     line-height: 1.5;
