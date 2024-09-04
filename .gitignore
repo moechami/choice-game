@@ -45,7 +45,7 @@ coverage/
 .env
 
 # zip files
-.zip
+*.zip
 
 # Virtual environments
 venv/
