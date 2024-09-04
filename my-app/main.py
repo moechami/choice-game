@@ -8,14 +8,18 @@ from langchain_openai import OpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain_core.output_parsers import StrOutputParser
 from io import BytesIO
+from dotenv import load_dotenv
 import openai
 import base64
 import requests
 import json
 import re
+import os
 
 app = Flask(__name__)
 CORS(app)
+
+load_dotenv()
 
 # Load secrets
 with open("choice-game-token.json") as f:
@@ -28,7 +32,7 @@ cloud_config = {
 CLIENT_ID = secrets["clientId"]
 CLIENT_SECRET = secrets["secret"]
 ASTRA_DB_KEYSPACE = "choice"
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 auth_provider = PlainTextAuthProvider(CLIENT_ID, CLIENT_SECRET)
 cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
@@ -175,9 +179,9 @@ def generate_image_prompt(story):
 
 
 template = """
-You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows as is: Inspired by "The Road" by Cormac McCarthy:
+You are an AI storyteller creating an immersive, challenging, and branching text-based game. The story follows as is: Inspired by "Life of Pi" by Yann Martel:
 
-    Prompt: In a bleak, post-apocalyptic world, a parent (the player) and child traverse a desolate landscape in search of safety. Their bond is tested by the harsh environment and encounters with other survivors. They must rely on their wits and each other to find hope and a place to call home.
+    Prompt: After a shipwreck, the protagonist finds themselves stranded on a lifeboat with a Bengal tiger. As they struggle for survival in the vast ocean, they form an unlikely bond with the tiger, delving into themes of faith, hope, and the will to live.
 
 Current game state:
 Health: {health}
